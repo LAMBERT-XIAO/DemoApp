@@ -1,0 +1,29 @@
+version: "2"
+
+services:
+  mongo:
+    image: mongo
+    container_name: lambert-mongo
+
+  redis:
+    image: redis
+    container_name: lambert-redis
+
+  node:
+    build:
+      context: './'
+      dockerfile: 'node/Dockerfile'
+    container_name: lambert-node
+    volumes:
+      - ./backend/:/app/backend/
+    links:
+      - mongo
+      - redis
+
+  # nginx:
+  #   build: './nginx'
+  #   ports:
+  #     - "80:80"
+  #   container_name: lambert-nginx
+  #   links:
+  #     - node
