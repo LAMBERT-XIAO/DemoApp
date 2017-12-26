@@ -11,11 +11,10 @@ services:
     image: redis
     container_name: lambert-redis
 
-  node:
-    build:
-      context: './'
-      dockerfile: 'node/Dockerfile'
-    container_name: lambert-node
+  backend:
+    image: lambert_builder:test
+    container_name: lambert-backend
+    working_dir: /app/backend/modules/demo
     volumes:
       - ./backend/:/app/backend/
     links:
@@ -23,13 +22,25 @@ services:
       - redis
     ports:
       - "7001:7001"
+    command: sh -c "npm install && npm run dev"
 
-  nginx:
+  frontend:
+    image: lambert_builder:test
+    container_name: lambert-frontend
+    working_dir: /app/frontend/modules/demo
+    volumes:
+      - ./frontend/:/app/frontend/
+    ports:
+      - "8080:8080"
+    command: sh -c "npm install && npm run dev"
+
+  web:
     image: nginx
-    container_name: lambert-nginx
+    container_name: lambert-web
     volumes:
       - ./nginx/conf/:/etc/nginx/conf.d/
     ports:
       - "9999:80"
     links:
-      - node
+      - frontend
+      - backend
