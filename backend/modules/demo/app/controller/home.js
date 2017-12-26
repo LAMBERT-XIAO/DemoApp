@@ -4,7 +4,11 @@ const Controller = require('egg').Controller;
 
 class HomeController extends Controller {
   async index() {
-    this.ctx.body = 'hi, egg';
+    const { ctx, app } = this;
+    // set
+    await app.redis.set('foo', 1234567);
+    // get
+    ctx.body = await app.redis.get('foo');
   }
 }
 

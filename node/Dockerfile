@@ -6,4 +6,4 @@ FROM node
 WORKDIR /app/backend/modules/demo
 EXPOSE 7001
 # CMD ["npm", "install", "&&", "npm", "start"]
-CMD npm install && npm start
+CMD npm install && npm run dev

@@ -4,6 +4,8 @@ services:
   mongo:
     image: mongo
     container_name: lambert-mongo
+    volumes:
+      - ./data/mongodb:/data/db
 
   redis:
     image: redis
@@ -19,6 +21,8 @@ services:
     links:
       - mongo
       - redis
+    ports:
+      - "7001:7001"
 
   # nginx:
   #   build: './nginx'

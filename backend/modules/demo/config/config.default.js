@@ -11,5 +11,14 @@ module.exports = appInfo => {
 
   config.mongoose = { url: 'mongodb://lambert-mongo/example' };
 
+  config.redis = {
+    client: {
+      port: 6379,
+      host: 'lambert-redis',
+      password: '',
+      db: 0,
+    },
+  };
+
   return config;
 };
