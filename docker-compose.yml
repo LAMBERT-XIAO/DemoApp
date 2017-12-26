@@ -24,10 +24,12 @@ services:
     ports:
       - "7001:7001"
 
-  # nginx:
-  #   build: './nginx'
-  #   ports:
-  #     - "80:80"
-  #   container_name: lambert-nginx
-  #   links:
-  #     - node
+  nginx:
+    image: nginx
+    container_name: lambert-nginx
+    volumes:
+      - ./nginx/conf/:/etc/nginx/conf.d/
+    ports:
+      - "9999:80"
+    links:
+      - node
