@@ -12,7 +12,7 @@ services:
     container_name: lambert-redis
 
   backend:
-    image: lambert_builder:test
+    image: builder:v1
     container_name: lambert-backend
     working_dir: /app/backend/modules/demo
     volumes:
@@ -25,14 +25,14 @@ services:
     command: sh -c "npm install && npm run dev"
 
   frontend:
-    image: lambert_builder:test
+    image: builder:v1
     container_name: lambert-frontend
     working_dir: /app/frontend/modules/demo
     volumes:
       - ./frontend/:/app/frontend/
     ports:
       - "7002:7002"
-    command: sh -c "npm run dev"
+    command: sh -c "npm install && npm run build"
 
   web:
     image: nginx
@@ -42,7 +42,7 @@ services:
     volumes_from:
       - frontend
     ports:
-      - "9999:80"
+      - "80:80"
     links:
       - frontend
       - backend

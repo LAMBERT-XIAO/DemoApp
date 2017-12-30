@@ -1,5 +1,5 @@
 <template>
-  <h1>HAHA</h1>
+  <h1>This is a post vue</h1>
 </template>
 
 <script>
