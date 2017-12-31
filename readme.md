@@ -1,24 +1,27 @@
 ### 启动脚本 run.sh
 脚本中提供了如下几个操作
 
-* init 
+* init
     使用 `docker-compose` 启动项目
 
-* builder_image 
+* builder_image
     构建 `builder` 镜像， `builder` 镜像中存放生成项目结构的脚本
 
-* stop 
+* stop
     停止运行中的容器
 
-* frontend_dev 
+* frontend_dev
     进入前端页面的dev模式
-    
+
 * reload_nginx_config
     当修改了 `nginx/conf` 目录下的配置时，通过该命令更新运行中nginx配置
 
 * generate_module
     可指定模块名称生成项目结构
-    
+
+* chown_module_dir
+    更改模块的目录权限，会在模块结构生成后自动执行
+
 ### frontend目录结构
 
 ```
@@ -46,7 +49,7 @@ frontend
 └── README.md
 
 ```
-    
+
 ### 模块目录结构
 
 每个模块都包含h5以及pc两个目录，分别存放给用户看的页面，以及管理员的后台页面

@@ -19,7 +19,7 @@ init() {
   docker-compose up -d
 
   echo "Init project done."
-  echo "Access http://lambert.com to view the index page."
+  echo "Visit http://lambert.com to view the index page."
   echo -e "\n=========================================================="
 }
 
@@ -50,19 +50,29 @@ reloadNginxConfig() {
   docker exec -i lambert-web service nginx reload
 }
 
+chownModuleDir() {
+  moduleName=$1
+  echo 'chown' $moduleName
+  sudo chown -R `whoami`:`whoami` ./frontend/modules/$moduleName
+}
+
 generateModule() {
   echo "Generate module template..."
+  moduleName=$1
 
   docker run \
     --rm \
     --name lambert-generate-template \
     -v `pwd`/frontend/modules:/app/frontend/modules \
     -w /app/builder/ \
-    builder:v1 bash -c "./generateTemplate.sh $1"
+    builder:v1 bash -c "./generateTemplate.sh $moduleName"
+
+  chownModuleDir $moduleName
+  echo "Generate module template done."
 }
 
 printHelp() {
-  operations="init builder_image stop frontend_dev reload_nginx_config generate_module"
+  operations="init builder_image stop frontend_dev reload_nginx_config generate_module chown_module_dir"
   echo -e "Could not find your operations, you can type ./build.sh with parameter:"
 
   for operation in $operations
@@ -89,6 +99,9 @@ case $1 in
     ;;
 'generate_module')
     generateModule $2
+    ;;
+'chown_module_dir')
+    chownModuleDir $2
     ;;
 *)
     printHelp

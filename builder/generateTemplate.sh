@@ -20,4 +20,4 @@ generateTemplate() {
   cp -r /app/builder/frontend-template/* $moduleName/h5
 }
 
-generateTemplate $1
+generateTemplate $@
