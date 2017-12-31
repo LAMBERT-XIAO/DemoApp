@@ -12,6 +12,7 @@ buildBuilderImage() {
 }
 
 init() {
+  stop
   echo -e "==========================================================\n"
   echo "Start to init the project..."
 
@@ -23,9 +24,13 @@ init() {
 }
 
 stop() {
+  echo -e "==========================================================\n"
   echo "Stop the project..."
+
   docker-compose stop
+
   echo "Stop project done."
+  echo -e "\n=========================================================="
 }
 
 frontendDev() {

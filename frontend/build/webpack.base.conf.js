@@ -20,11 +20,14 @@ const createLintingRule = () => ({
 })
 
 module.exports = {
-  context: path.resolve(__dirname, '../'),
+  // 指定哪个模块
+  context: path.resolve(__dirname, '../modules/', config.build.buildModulePublishPath),
   entry: {
+    // 就是这里，这里的入口文件需要根据指定的module来确定
     app: './src/main.js'
   },
   output: {
+    // 同样，输出的路径也需要通过module来确定
     path: config.build.assetsRoot,
     filename: '[name].js',
     publicPath: process.env.NODE_ENV === 'production'
@@ -35,7 +38,7 @@ module.exports = {
     extensions: ['.js', '.vue', '.json'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
-      '@': resolve('src'),
+      '@': resolve('modules'),
     }
   },
   module: {

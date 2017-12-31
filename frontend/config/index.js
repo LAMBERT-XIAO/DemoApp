@@ -4,6 +4,9 @@
 
 const path = require('path')
 
+const MODULE_NAME = process.env.MODULE_NAME
+const MODULE_SIDE = process.env.MODULE_SIDE
+
 module.exports = {
   dev: {
 
@@ -50,12 +53,21 @@ module.exports = {
 
   build: {
     // Template for index.html
-    index: path.resolve(__dirname, '../dist/index.html'),
+    index: path.resolve(
+      __dirname,
+      '../dist/modules/',
+      MODULE_NAME,
+      MODULE_SIDE,
+      'index.html'
+    ),
 
     // Paths
-    assetsRoot: path.resolve(__dirname, '../dist'),
-    assetsSubDirectory: 'static',
+    assetsRoot: path.resolve(__dirname, '../dist/modules'),
+    assetsSubDirectory: path.join(MODULE_NAME, MODULE_SIDE, 'static'),
     assetsPublicPath: '/',
+
+    // Build module path 指定构建哪个模块，对entry和output有影响
+    buildModulePublishPath: path.join(MODULE_NAME, MODULE_SIDE),
 
     /**
      * Source Maps

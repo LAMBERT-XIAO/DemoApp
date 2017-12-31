@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
-import Poster from '@/components/Poster'
+import HelloWorld from '@/demo/pc/src/components/HelloWorld'
+import Poster from '@/demo/pc/src/components/Poster'
 
 Vue.use(Router)
 
