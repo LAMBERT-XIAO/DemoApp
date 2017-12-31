@@ -1,4 +1,22 @@
 'use strict'
+
+const buildModule = process.env.MODULE
+
+if (!buildModule) {
+  console.log('Module name must be specified, like "module=moduleName:side npm run dev".')
+  return
+}
+
+const [moduleName, moduleSide] = buildModule.split(':')
+
+if ('pc' !== moduleSide && 'h5' !== moduleSide) {
+  console.log('Module side must be specified as pc or h5.')
+  return
+}
+
+process.env.MODULE_NAME = moduleName
+process.env.MODULE_SIDE = moduleSide
+
 const utils = require('./utils')
 const webpack = require('webpack')
 const config = require('../config')

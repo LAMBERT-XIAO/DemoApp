@@ -3,7 +3,7 @@ require('./check-versions')()
 
 process.env.NODE_ENV = 'production'
 
-let buildModule = process.env.MODULE
+const buildModule = process.env.MODULE
 
 if (!buildModule) {
   console.log('Module name must be specified, like "module=moduleName:side npm run build".')
@@ -32,12 +32,6 @@ const webpackConfig = require('./webpack.prod.conf')
 const spinner = ora('building for production...')
 spinner.start()
 
-// 删除旧的build目录下的所有文件，需要改
-// builｄ哪一个模块，就删除哪一个模块下面的旧文件
-// module=demo npm run build 就删除dist/modules/static/demo下面的文件
-
-// 还需要指定是build pc端页面还是h5页面
-
 /*
 
 dist
@@ -54,10 +48,7 @@ dist
           - js
         index.html
 */
-const pathToRemove = path.join(
-  config.build.assetsRoot, // dist/modules
-  config.build.assetsSubDirectory
-)
+const pathToRemove = path.join(config.build.assetsRoot, config.build.assetsSubDirectory)
 
 rm(pathToRemove, (err) => {
   if (err)

@@ -42,7 +42,7 @@ frontendDev() {
     --name lambert-frontend-dev \
     -p 7002:7002 \
     -v `pwd`/frontend/:/app/frontend/ \
-    -w /app/frontend/modules/demo \
+    -w /app/frontend \
     builder:v1 bash
 }
 
@@ -50,8 +50,19 @@ reloadNginxConfig() {
   docker exec -i lambert-web service nginx reload
 }
 
+generateModule() {
+  echo "Generate module template..."
+
+  docker run \
+    --rm \
+    --name lambert-generate-template \
+    -v `pwd`/frontend/modules:/app/frontend/modules \
+    -w /app/builder/ \
+    builder:v1 bash -c "./generateTemplate.sh $1"
+}
+
 printHelp() {
-  operations="init builder_image stop frontend_dev reload_nginx_config"
+  operations="init builder_image stop frontend_dev reload_nginx_config generate_module"
   echo -e "Could not find your operations, you can type ./build.sh with parameter:"
 
   for operation in $operations
@@ -75,6 +86,9 @@ case $1 in
     ;;
 'reload_nginx_config')
     reloadNginxConfig
+    ;;
+'generate_module')
+    generateModule $2
     ;;
 *)
     printHelp
