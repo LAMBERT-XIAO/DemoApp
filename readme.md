@@ -18,6 +18,75 @@
 
 * generate_module
     可指定模块名称生成项目结构
+    
+### frontend目录结构
+
+```
+frontend
+├── build                       # webpack的配置文件
+│   ├── build.js
+│   ├── check-versions.js
+│   ├── logo.png
+│   ├── utils.js
+│   ├── vue-loader.conf.js
+│   ├── webpack.base.conf.js
+│   ├── webpack.dev.conf.js
+│   └── webpack.prod.conf.js
+├── config                      # 存放一些build时用到的变量
+│   ├── dev.env.js
+│   ├── index.js
+│   └── prod.env.js
+├── dist                        # 存放经过webpack build之后的文件
+│   └── modules
+├── modules                     # 所有模块的源文件
+│   └── demo
+├── modules.js                  # 存放需要在启动时build的模块清单
+├── package.json
+├── package-lock.json
+└── README.md
+
+```
+    
+### 模块目录结构
+
+每个模块都包含h5以及pc两个目录，分别存放给用户看的页面，以及管理员的后台页面
+
+```
+moduleName                                  # 模块名
+├── h5                                      # 用户页面
+│   ├── index.html                          # 用户页面的入口页面
+│   ├── src
+│   │   ├── App.vue
+│   │   ├── assets                          # 资源文件
+│   │   │   └── logo.png
+│   │   ├── components                      # vue组件
+│   │   │   └── HelloWorld.vue
+│   │   ├── config                          # 模块内的配置文件
+│   │   │   └── domain.js
+│   │   ├── main.js
+│   │   ├── router                          # 路由文件
+│   │   │   └── index.js
+│   │   └── services                        # 逻辑操作方法
+│   │       └── user.js
+│   └── static                              # 其他资源文件
+└── pc                                      # 管理后台页面
+    ├── index.html
+    ├── src
+    │   ├── App.vue
+    │   ├── assets
+    │   │   └── logo.png
+    │   ├── components
+    │   │   └── HelloWorld.vue
+    │   ├── config
+    │   │   └── domain.js
+    │   ├── main.js
+    │   ├── router
+    │   │   └── index.js
+    │   └── services
+    │       └── user.js
+    └── static
+
+```
 
 
 ### 增加主机的host
