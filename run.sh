@@ -81,22 +81,46 @@ chownModuleDir() {
 }
 
 generateModule() {
-  echo "Generate module template..."
   moduleName=$1
 
   docker run \
     --rm \
     --name lambert-generate-template \
     -v `pwd`/frontend/modules:/app/frontend/modules \
+    -v `pwd`/backend/modules:/app/backend/modules \
     -w /app/builder/ \
     builder:v1 bash -c "./generateTemplate.sh $moduleName"
 
   chownModuleDir $moduleName
-  echo "Generate module template done."
+  linkFrontendToBackend $moduleName
+}
+
+linkFrontendToBackend() {
+  moduleName=$1
+  sudo mkdir -p `pwd`/backend/modules/member/frontend/
+  sudo ln -s `pwd`/frontend/modules/${moduleName}/h5 `pwd`/backend/modules/member/frontend/
+  sudo ln -s `pwd`/frontend/modules/${moduleName}/pc `pwd`/backend/modules/member/frontend/
+}
+
+removeModule() {
+  moduleName=$1
+
+  sudo rm -rf frontend/modules/$moduleName
+  sudo rm -rf backend/modules/$moduleName
 }
 
 printHelp() {
-  operations="init builder_image stop frontend_dev reload_nginx_config generate_module chown_module_dir"
+  operations="
+    init
+    builder_image
+    stop
+    frontend_dev
+    reload_nginx_config
+    generate_module
+    chown_module_dir
+    remove_module
+    link_frontend_to_backend
+  "
   echo -e "Could not find your operations, you can type ./build.sh with parameter:"
 
   for operation in $operations
@@ -122,10 +146,16 @@ case $1 in
     reloadNginxConfig
     ;;
 'generate_module')
-    generateModule $2
+    generateModule ${@:2}
     ;;
 'chown_module_dir')
-    chownModuleDir $2
+    chownModuleDir ${@:2}
+    ;;
+'remove_module')
+    removeModule ${@:2}
+    ;;
+'link_frontend_to_backend')
+    linkFrontendToBackend ${@:2}
     ;;
 *)
     printHelp
