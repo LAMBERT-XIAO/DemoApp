@@ -1,5 +1,24 @@
 #!/bin/bash
 
+#===================================================================================
+#
+# FILE: run.sh
+#
+# USAGE: run.sh operate_command
+#
+# DESCRIPTION: Provide init project's method.
+#
+# OPTIONS: see function ’usage’ below
+# REQUIREMENTS: ---
+# BUGS: ---
+# NOTES: ---
+# AUTHOR: Lambert Xiao, iamryanshaw24@gmail.com
+# COMPANY: Augmentum, Shanghai
+# VERSION: 0.1
+# CREATED: 12.05.2002 - 12:36:50
+# REVISION: 2017-12-01
+#===================================================================================
+
 buildBuilderImage() {
   echo -e "==========================================================\n"
   echo "Start to build the builer image..."
@@ -11,6 +30,11 @@ buildBuilderImage() {
   echo -e "\n=========================================================="
 }
 
+#=== FUNCTION ================================================================
+# NAME: init
+# DESCRIPTION: Stop all running containers, and restart the containers
+# PARAMETER 0: ---
+#===============================================================================
 init() {
   stop
   echo -e "==========================================================\n"
